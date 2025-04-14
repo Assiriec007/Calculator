@@ -1,52 +1,81 @@
-﻿namespace Trenirovka
+﻿using System.ComponentModel.DataAnnotations;
+using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
+using System.Threading.Channels;
+
+namespace Trenirovka
 {
-    class Program
+    class Calculator
     {
-        static void Main(string[] args)
+        public double Fold(double x, double y)
         {
-            while (true)
+            return x + y;
+        }
+
+        public double Subtraction(double x, double y)
+        {
+            return x - y;
+        }
+
+        public double Multiply(double x, double y)
+        {
+            return x * y;
+        }
+
+        public double Divide(double x, double y)
+        {
+            if (x == 0)
             {
-                Console.WriteLine("Введите число 1");
-                int x = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Введите число 2");
-                double y = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("Ошибка!Делениие на ноль.");
+                return double.NaN;
+            }
+            return x / y;
+        }
 
-                Console.WriteLine("Выберите действие: \n1.Сложение(+) \n2.Вычитание(-) \n3.Умножение(*) \n4.Деление(/)");
-                int number = Convert.ToInt32(Console.ReadLine());
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Calculator calculator = new Calculator();
 
+                Console.WriteLine("Введите первое число:....");
+                double num1 = Convert.ToDouble(Console.ReadLine());
 
+                Console.WriteLine("Введите второе число:....");
+                double num2 = Convert.ToDouble(Console.ReadLine());
 
+                Console.WriteLine("Выберите операцию (+, -, *, /) ");
+                string operation = Console.ReadLine();
 
+                double result;
 
-                switch (number)
+                switch (operation)
                 {
-                    case 1:
-                        Console.WriteLine(x + y);
+                    case "+":
+                        result = calculator.Fold(num1, num2);
                         break;
-                    case 2:
-                        Console.WriteLine(x - y);
+                    case "-":
+                        result = calculator.Subtraction(num1, num2);
                         break;
-                    case 3:
-                        Console.WriteLine(x * y);
+                    case "*":
+                        result = calculator.Multiply(num1, num2);
                         break;
-                    case 4:
-                        if (y == 0)
-                        {
-                            Console.WriteLine("Ошибка!");
-                        }
-                        else
-                        {
-                            Console.WriteLine(x / y);
-                        }
+                    case "/":
+                        result = calculator.Divide(num1, num2);
                         break;
                     default:
-                        Console.WriteLine("Такого действия нет.");
-                        break;
+                        Console.WriteLine("Такой операции нет.");
+                        return;
                 }
-
-                Console.ReadKey();
-                Console.Clear();
+                Console.WriteLine("Результат действия: " + result);
             }
         }
     }
 }
+
+
+
+
+
+
+
